@@ -38,17 +38,29 @@ const Navbar = () => {
 
                             <div className='absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20 hidden group-hover:block'>
                                 <div className='min-w-48 bg-stone-100 rounded flex flex-col gap-4 p-4'>
-                                    <p onClick={()=>navigate('my-profile')} className='hover:text-black cursor-pointer'>My Profile</p>
-                                    <p onClick={()=>navigate('my-appointments')} className='hover:text-black cursor-pointer'>My Appointments</p>
-                                    <p onClick={()=>setToken(false)} className='hover:text-black cursor-pointer'>Logout</p>
+                                    <p onClick={() => navigate('my-profile')} className='hover:text-black cursor-pointer'>My Profile</p>
+                                    <p onClick={() => navigate('my-appointments')} className='hover:text-black cursor-pointer'>My Appointments</p>
+                                    <p onClick={() => setToken(false)} className='hover:text-black cursor-pointer'>Logout</p>
                                 </div>
                             </div>
                         </div>
 
                         : <button onClick={() => navigate('/login')} style={{ backgroundColor: '#5f6FFF' }} className='text-white px-8 py-3 rounded-full font-light cursor-pointer hover:opacity-90 transition border-none'>Create account</button>
                 }
-
-
+                <img onClick={() => setShowMenu(true)} className='w-6 md:hidden' src={assets.menu_icon} alt="" />
+                {/* -------- Mobile Menu -------- */}
+                <div className={` ${showMenu ? 'fixed w-full' : 'h-0 w-0'} md:hidden right-0 top-0 bottom-0 z-20 overflow-hidden bg-white transition-all`}>
+                    <div>
+                        <img src={assets.logo} alt="" />
+                        <img onClick={() => setShowMenu(false)} src={assets.cross_icon} alt="" />
+                    </div>
+                    <ul>
+                        <NavLink>Home</NavLink>
+                        <NavLink>ALL DOCTORS</NavLink>
+                        <NavLink>ABOUT</NavLink>
+                        <NavLink>CONTACT</NavLink>
+                    </ul>
+                </div>
             </div>
         </div>
     )
