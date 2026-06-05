@@ -30,7 +30,7 @@ const MyAppointments = () => {
           </div>
         ))}
       </div>
-      
+
     </div>
   )
 }
