@@ -14,6 +14,10 @@ const doctorSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    image: {
+        type: String,
+        required: true,
+    },
     speciality: {
         type: String,
         required: true,
