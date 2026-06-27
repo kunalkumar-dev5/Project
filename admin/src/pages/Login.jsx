@@ -16,11 +16,11 @@ const Login = () => {
 
         try {
             if (state === 'Admin') {
-                   const {data} = await axios.post(backendUrl + '/admin/login', { email, password })
-               if(data.success){
-                console.log(data.token)
-                setAToken(data.token)
-               }
+                const { data } = await axios.post(backendUrl + '/admin/login', { email, password })
+                if (data.success) {
+                    localStorage.setItem('aToken', data.token)
+                    setAToken(data.token)
+                }
             } else {
 
 
@@ -29,7 +29,7 @@ const Login = () => {
         } catch (error) {
 
 
-         }
+        }
     }
 
     return (
@@ -53,6 +53,7 @@ const Login = () => {
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        suggestion="current-password"
                         required
                     />
                 </div>
