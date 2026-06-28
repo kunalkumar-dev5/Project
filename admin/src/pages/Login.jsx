@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { assets } from '../assets/assets'
 import { AdminContext } from "../context/AdminContext"
 import axios from "axios"
+import { toast } from "react-toastify"
 
 const Login = () => {
     const [state, setState] = useState('Admin')
@@ -14,21 +15,27 @@ const Login = () => {
 
         event.preventDefault()
 
+        const baseUrl = backendUrl || 'http://localhost:4000'
+        const loginUrl = `${baseUrl.replace(/\/$/, '')}/api/admin/login`
+        console.log('Admin login submit', { loginUrl, email, password })
+
         try {
             if (state === 'Admin') {
-                const { data } = await axios.post(backendUrl + '/admin/login', { email, password })
+                const { data } = await axios.post(backendUrl + '/api/admin/login', { email, password })
                 if (data.success) {
                     localStorage.setItem('aToken', data.token)
                     setAToken(data.token)
+                } else {
+                    toast.error(data.message)
                 }
             } else {
-
+             
 
             }
 
         } catch (error) {
-
-
+            console.error('Admin login error', error)
+           
         }
     }
 
@@ -53,11 +60,11 @@ const Login = () => {
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        suggestion="current-password"
+                        // suggestion="current-password"
                         required
                     />
                 </div>
-                <button className='bg-primary text-white w-full py-2 rounded-md text-base'>
+                <button type='submit' className='bg-primary text-white w-full py-2 rounded-md text-base'>
                     Login
                 </button>
 
