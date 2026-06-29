@@ -29,13 +29,13 @@ const Login = () => {
                     toast.error(data.message)
                 }
             } else {
-             
+
 
             }
 
         } catch (error) {
             console.error('Admin login error', error)
-           
+
         }
     }
 
