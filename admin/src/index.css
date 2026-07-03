@@ -3,3 +3,6 @@
 @tailwind utilities;
 
 /* You can add global styles below */
+::-webkit-scrollbar{
+    @apply hidden
+}
