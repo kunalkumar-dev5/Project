@@ -1,9 +1,19 @@
-import React from 'react'
+
+import { AdminContext } from '../../context/AdminContext'
+import React,{ useContext, useEffect } from 'react'
 
 const DoctorsList = () => {
+  const { doctors, aToken, getAllDoctors } = useContext(AdminContext)
+
+  useEffect(() => {
+    if (aToken) {
+      getAllDoctors()
+    }
+  }, [aToken])
+
   return (
     <div>
-      
+
     </div>
   )
 }
