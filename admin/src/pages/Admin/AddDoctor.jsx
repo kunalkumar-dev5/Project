@@ -18,7 +18,7 @@ const AddDoctor = () => {
   const [address1, setAddress1] = React.useState('');
   const [address2, setAddress2] = React.useState('');
 
-  const { backendUrl, aToken } = useContext(AdminContext)
+  const { backendUrl, aToken, getAllDoctors } = useContext(AdminContext)
   const baseUrl = backendUrl || 'http://localhost:4000'
 
   const onSubmitHandler = async (event) => {
@@ -53,6 +53,7 @@ const AddDoctor = () => {
       })
 
       if (data.success) {
+        await getAllDoctors()
         toast.success(data.message)
         setDocImg(false)
         setName('')

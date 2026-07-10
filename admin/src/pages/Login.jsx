@@ -21,7 +21,7 @@ const Login = () => {
 
         try {
             if (state === 'Admin') {
-                const { data } = await axios.post(backendUrl + '/api/admin/login', { email, password })
+                const { data } = await axios.post(loginUrl, { email, password })
                 if (data.success) {
                     localStorage.setItem('aToken', data.token)
                     setAToken(data.token)
@@ -35,7 +35,7 @@ const Login = () => {
 
         } catch (error) {
             console.error('Admin login error', error)
-
+            toast.error(error.message)
         }
     }
 
