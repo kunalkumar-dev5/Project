@@ -5,7 +5,7 @@ import { assets } from '../../assets/assets'
 const DoctorsList = () => {
   const { doctors, aToken, getAllDoctors } = useContext(AdminContext)
 
-  ffect(() => {
+  useEffect(() => {
     if (aToken) {
       getAllDoctors()
     }
@@ -28,8 +28,8 @@ const DoctorsList = () => {
             </div>
               </div>
             </div>
-          ))
-        }
+          ))}
+        { }
       </div>
     </div>
   )

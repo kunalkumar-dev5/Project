@@ -4,8 +4,6 @@ import 'dotenv/config'
 import connectDB from './config/mongodb.js'
 import connectCloudinary from './config/cloudinary.js'
 import adminRouter from './routes/adminRoute.js'
-import { addDoctor, loginAdmin } from './controllers/adminController.js'
-import upload from './middlewares/multer.js'
 
 // app config
 const app = express()
@@ -19,8 +17,6 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
 // api endpoints
-app.post('/api/admin/login', loginAdmin)
-app.post('/api/admin/add-doctor', upload.single('image'), addDoctor)
 app.use('/api/admin', adminRouter)
 
 app.get('/', (req, res) => {
