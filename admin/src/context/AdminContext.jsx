@@ -8,6 +8,7 @@ const AdminContextProvider = (props) => {
 
     const [aToken, setAToken] = useState(localStorage.getItem('aToken') ? localStorage.getItem('aToken') : '')
     const [doctors, setDoctors] = useState([])
+
     const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000'
     const baseUrl = backendUrl.replace(/\/$/, '')
 
@@ -22,14 +23,29 @@ const AdminContextProvider = (props) => {
             }
         } catch (error) {
             console.error('Get doctors error:', error);
-            toast.error(error.message);
+            toast.error(error.response?.data?.message || error.message);
         }
     }
+
+    const changeAvailability = async (docId) => {
+        try {
+            const { data } = await axios.post(`${baseUrl}/api/admin/change-availability`, { docId }, { headers: { atoken: aToken } });
+            if (data.success) {
+                toast.success(data.message);
+                getAllDoctors(); // Refresh the doctors list
+            } else {
+                toast.error(data.message);
+            }
+        } catch (error) {
+            toast.error(error.response?.data?.message || error.message);
+        }
+    };
 
     const value = {
         aToken, setAToken,
         backendUrl, doctors,
-        getAllDoctors
+        getAllDoctors,
+        changeAvailability
     }
 
     return (
