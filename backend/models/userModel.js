@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
         default: "Not Selected",
     },
     dob: {
-        type: string,
+        type: String,
         default: "Not Selected",
     },phone: {
         type: String,
