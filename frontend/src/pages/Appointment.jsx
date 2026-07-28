@@ -97,14 +97,14 @@ const Appointment = () => {
         </div>
 
         <div className='flex-1 border border-gray-400 rounded-lg p-8 py-7 bg-white mx-2 sm:mx-0 mt-[-80] sm:mt-0'>
-          {/* ---------- Doc Info : Name, degree, specialty-------- */}
+          {/* ---------- Doc Info : Name, degree, speciality-------- */}
           <p className='flex items-center gap-2 text-2xl font-medium text-gray-900'>
             {docInfo.name}
             <img className='w-5' src={assets.verified_icon} alt="" />
           </p>
 
           <div className='flex items-center gap-2 text-sm mt-1 text-gray-600'>
-            <p>{docInfo.degree} - {docInfo.specialty}
+            <p>{docInfo.degree} - {docInfo.speciality}
             </p>
             <button className='py-0.5 px-2 border text-xs rounded-full'>{docInfo.experience}</button>
           </div>
