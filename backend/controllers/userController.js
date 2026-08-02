@@ -180,6 +180,14 @@ const bookAppointment = async (req, res) => {
 
         delete docData.slots_booked
 
+        const normalizedDocData = {
+            ...docData.toObject ? docData.toObject() : docData,
+            address: {
+                line1: docData.address?.line1 ?? docData.address?.address1 ?? '',
+                line2: docData.address?.line2 ?? docData.address?.address2 ?? ''
+            }
+        }
+
         const appointmentData = {
             userId,
             docId,
@@ -187,7 +195,7 @@ const bookAppointment = async (req, res) => {
             slotData: slotDate,
             slotTime,
             userData,
-            docData,
+            docData: normalizedDocData,
             amount: docData.fee,
             date: Date.now(),
             data: Date.now()
@@ -209,4 +217,18 @@ const bookAppointment = async (req, res) => {
 
 }
 
-export { registerUser, loginUser, getProfile, updateProfile,bookAppointment }
+// API to get user appointments for frontend my-appointments page
+const listAppointment = async (req, res) => {
+    try {
+        const { userId } = req.body || {}
+        const appointments = await appointmentModel.find({ userId }).sort({ date: -1 })
+
+        res.json({ success: true, appointments })
+
+    } catch (error) {
+        console.log(error)
+        res.json({ success: false, message: error.message })
+    }
+}
+
+export { registerUser, loginUser, getProfile, updateProfile, bookAppointment, listAppointment }

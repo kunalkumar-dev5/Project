@@ -98,7 +98,7 @@ const Appointment = () => {
 
       let day = date.getDate()
       let month = date.getMonth() + 1
-      let year = date.getYear()
+      let year = date.getFullYear()
 
       const slotDate = day + "_" + month + "_" + year
 

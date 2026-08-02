@@ -36,6 +36,22 @@ const addDoctor = async (req, res) => {
         const imageUpload = await cloudinary.uploader.upload(imageFile.path, { resource_type: "image" })
         const imageUrl = imageUpload.secure_url
 
+        const parsedAddress = (() => {
+            try {
+                return JSON.parse(address)
+            } catch {
+                return address
+            }
+        })()
+
+        const normalizedAddress = (() => {
+            const rawAddress = parsedAddress && typeof parsedAddress === 'object' ? parsedAddress : {}
+            return {
+                line1: rawAddress.line1 ?? rawAddress.address1 ?? '',
+                line2: rawAddress.line2 ?? rawAddress.address2 ?? ''
+            }
+        })()
+
         //Doctor data
         const doctorData = {
             name,
@@ -47,13 +63,7 @@ const addDoctor = async (req, res) => {
             experience,
             about,
             fee: feeValue,
-            address: (() => {
-                try {
-                    return JSON.parse(address)
-                } catch {
-                    return address
-                }
-            })(),
+            address: normalizedAddress,
             date: Date.now()
         }
 
