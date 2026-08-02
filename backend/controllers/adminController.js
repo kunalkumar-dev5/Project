@@ -11,10 +11,11 @@ const addDoctor = async (req, res) => {
         const { name, email, password, speciality, degree, experience, about, fees, address } = req.body;
 
         const imageFile = req.file
+        const feeValue = Number(fees)
 
         // checking for all data to add doctor
-        if (!name || !email || !password || !speciality || !degree || !experience || !about || !fees || !address || !imageFile) {
-            return res.json({ success: false, message: "All fields are required" });
+        if (!name || !email || !password || !speciality || !degree || !experience || !about || !address || !imageFile || !Number.isFinite(feeValue) || feeValue <= 0) {
+            return res.json({ success: false, message: "All fields are required and fees must be greater than 0" });
         }
 
         // validating email format
@@ -45,7 +46,7 @@ const addDoctor = async (req, res) => {
             degree,
             experience,
             about,
-            fee: fees,
+            fee: feeValue,
             address: (() => {
                 try {
                     return JSON.parse(address)
@@ -89,8 +90,16 @@ const loginAdmin = async (req, res) => {
 // API to get all doctors list for admin panel
 const allDoctors = async (req, res) => {
     try {
-        const doctors = await doctorModel.find({}).select('-password -__v')
-        res.json({ success: true, doctors })
+        const doctors = await doctorModel.find({}).select('-password -__v').lean()
+        const normalizedDoctors = doctors.map((doctor) => {
+            const fee = doctor.fee ?? doctor.fees ?? 0
+            return {
+                ...doctor,
+                fee,
+                fees: fee
+            }
+        })
+        res.json({ success: true, doctors: normalizedDoctors })
     } catch (error) {
         console.log(error)
         res.json({ success: false, message: error.message })

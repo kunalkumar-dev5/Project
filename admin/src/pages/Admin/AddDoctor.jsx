@@ -11,7 +11,7 @@ const AddDoctor = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [experience, setExperience] = React.useState(1);
-  const [fees, setFees] = React.useState('')
+  const [fees, setFees] = React.useState(0)
   const [about, setAbout] = React.useState('');
   const [speciality, setSpeciality] = React.useState('General Physician');
   const [degree, setDegree] = React.useState('');
@@ -29,13 +29,19 @@ const AddDoctor = () => {
       if (!docImg) {
         return toast.error('Image Not Selected')
       }
+
+      const feeValue = Number(fees)
+      if (!Number.isFinite(feeValue) || feeValue <= 0) {
+        return toast.error('Please enter valid doctor fees')
+      }
+
       const formData = new FormData()
       formData.append('image', docImg)
       formData.append('name', name)
       formData.append('email', email)
       formData.append('password', password)
       formData.append('experience', Number(experience))
-      formData.append('fees', Number(fees))
+      formData.append('fees', feeValue)
       formData.append('about', about)
       formData.append('speciality', speciality)
       formData.append('degree', degree)
@@ -59,7 +65,7 @@ const AddDoctor = () => {
         setName('')
         setEmail('')
         setPassword('')
-        setFees('')
+        setFees(0)
         setAbout('')
         setDegree('')
         setAddress1('')
